@@ -1,0 +1,453 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Felicidades Vivian!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #b18dd0 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+            width: 90%;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            overflow-y: auto;
+            max-height: 90vh;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .content::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .birrete-lateral {
+            position: fixed;
+            z-index: 2;
+            width: 150px;
+            opacity: 0.8;
+            animation: floating 4s ease-in-out infinite;
+            filter: drop-shadow(10px 10px 15px rgba(255, 50, 50, 0.5));
+        }
+        
+        .birrete-izquierdo {
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-15deg);
+        }
+        
+        .birrete-derecho {
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%) rotate(15deg);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            color: #4a4a4a;
+            margin-bottom: 1.5rem;
+            font-family: 'Dancing Script', cursive;
+            animation: fadeIn 2s ease-in-out;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        p {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 2rem;
+            animation: slideIn 2s ease-in-out;
+            line-height: 1.6;
+        }
+        
+        .btn-celebrate {
+            background: linear-gradient(45deg, #ff6b6b, #ffa3a3);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            z-index: 4;
+        }
+        
+        .btn-celebrate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        .btn-celebrate:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-celebrate::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn-celebrate:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .hidden {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .visible {
+            display: block;
+            opacity: 1;
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+        
+        .image-container {
+            margin-top: 2rem;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .image-container img {
+            width: 250px;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+            border-radius: 10px;
+            filter: drop-shadow(10px 10px 15px rgba(56, 248, 255, 0.5));
+        }
+        
+        .visible img {
+            opacity: 1 !important;
+            transform: scale(1) !important;
+        }
+        
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .message {
+            font-size: 1.2rem;
+            color: #555;
+            margin-top: 2rem;
+            padding: 1rem;
+            border-top: 1px dashed #ccc;
+            animation: fadeIn 3s ease-in-out;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10;
+            background-color: rgb(255, 255, 255);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <img src="ramo.png" alt="Birrete" class="birrete-lateral birrete-izquierdo">
+    <img src="ramo.png" alt="Birrete" class="birrete-lateral birrete-derecho">
+    <div class="content">
+        <h1>🎓 ¡Felicidades, Vivian! 🎉</h1>
+        <p>Hoy celebramos tu esfuerzo, dedicación y este gran logro. <br>¡El mundo está listo para todo lo maravilloso que vas a lograr!</p>
+        <button class="btn-celebrate" onclick="celebrar()">🎉 ¡Celebrar tu logro! 🎓</button>
+        
+        <div id="celebracion" class="hidden image-container">
+            <img id="foto-vivian" src="vivian vire.png" alt="Vivian celebrando" class="floating">
+        </div>
+        
+        <div id="mensaje-final" class="hidden message">
+            <p>Este es solo el comienzo de un futuro brillante. <br>¡Estoy muy orgulloso de ti!</p>
+        </div>
+    </div>
+    
+    <div class="confetti" id="confetti"></div>
+    <canvas class="fireworks" id="fireworks"></canvas>
+    
+    <!-- Audio element (hidden) -->
+    <audio id="dancingQueen" loop>
+        <source src="cancion.mp3" type="audio/mpeg">
+        <!-- Nota: He usado una canción de ejemplo porque no puedo enlazar directamente a Dancing Queen por derechos de autor -->
+        <!-- Para usar la canción real, necesitarías tener el archivo MP3 o un enlace autorizado -->
+    </audio>
+    
+    <!-- Music control button -->
+    <div id="musicControl" class="music-control hidden" onclick="toggleMusic()">
+        <span id="musicIcon">🎵</span>
+    </div>
+    
+    <script>
+        // Variables para control de música
+        const audio = document.getElementById("dancingQueen");
+        const musicControl = document.getElementById("musicControl");
+        const musicIcon = document.getElementById("musicIcon");
+        let isMusicPlaying = false;
+        
+        function celebrar() {
+            let celebracion = document.getElementById("celebracion");
+            let mensajeFinal = document.getElementById("mensaje-final");
+            let btn = document.querySelector('.btn-celebrate');
+            
+            // Cambiar el botón
+            btn.textContent = "🥳 ¡Lo lograste! 🎓";
+            btn.style.background = "linear-gradient(45deg, #4ecdc4, #88dac8)";
+            btn.style.boxShadow = "0 4px 15px rgba(78, 205, 196, 0.4)";
+            
+            // Mostrar elementos
+            celebracion.classList.remove("hidden");
+            celebracion.classList.add("visible");
+            
+            setTimeout(() => {
+                document.getElementById("foto-vivian").style.opacity = "1";
+                document.getElementById("foto-vivian").style.transform = "scale(1)";
+            }, 500);
+            
+            setTimeout(() => {
+                mensajeFinal.classList.remove("hidden");
+                mensajeFinal.classList.add("visible");
+            }, 400);
+            
+            // Iniciar música
+            playMusic();
+            
+            iniciarFuegosArtificiales();
+            crearConfeti();
+        }
+        
+        function playMusic() {
+            audio.play()
+                .then(() => {
+                    isMusicPlaying = true;
+                    musicControl.classList.remove("hidden");
+                    musicIcon.textContent = "🔊";
+                })
+                .catch(error => {
+                    console.log("Error al reproducir música:", error);
+                    // Mostrar botón de play por si el usuario necesita interactuar primero
+                    musicControl.classList.remove("hidden");
+                    musicIcon.textContent = "▶️";
+                });
+        }
+        
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                audio.pause();
+                musicIcon.textContent = "▶️";
+            } else {
+                audio.play();
+                musicIcon.textContent = "🔊";
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+        
+        function iniciarFuegosArtificiales() {
+            const canvas = document.getElementById("fireworks");
+            const ctx = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const particles = [];
+            
+            function Particle(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.size = Math.random() * 5 + 2;
+                this.speedX = Math.random() * 4 - 2;
+                this.speedY = Math.random() * 4 - 2;
+                this.alpha = 1;
+            }
+            
+            Particle.prototype.update = function() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.alpha -= 0.02;
+            };
+            
+            Particle.prototype.draw = function() {
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            };
+            
+            function createParticles(x, y) {
+                for (let i = 0; i < 100; i++) {
+                    particles.push(new Particle(x, y, `hsl(${Math.random() * 360}, 100%, 50%)`));
+                }
+            }
+            
+            function animate() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    particles[i].update();
+                    particles[i].draw();
+                    if (particles[i].alpha <= 0) {
+                        particles.splice(i, 1);
+                    }
+                }
+                
+                if (Math.random() < 0.03 && particles.length < 500) {
+                    createParticles(
+                        Math.random() * canvas.width,
+                        Math.random() * canvas.height / 2
+                    );
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    createParticles(
+                        canvas.width / 2 + (Math.random() - 0.5) * 200,
+                        canvas.height / 2 + (Math.random() - 0.5) * 100
+                    );
+                }, i * 300);
+            }
+            
+            animate();
+        }
+        
+        function crearConfeti() {
+            const confettiContainer = document.getElementById('confetti');
+            const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#ffa3a3', '#88dac8', '#f7fff7'];
+            
+            for (let i = 0; i < 150; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'absolute';
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = Math.random() * 10 + 5 + 'px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = -20 + 'px';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    confetti.style.opacity = Math.random() + 0.5;
+                    
+                    confettiContainer.appendChild(confetti);
+                    
+                    const animationDuration = Math.random() * 3 + 2;
+                    
+                    confetti.animate([
+                        { top: '-20px', transform: `rotate(0deg)` },
+                        { top: '100vh', transform: `rotate(${Math.random() * 360}deg)` }
+                    ], {
+                        duration: animationDuration * 1000,
+                        easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
+                        fill: 'forwards'
+                    });
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, animationDuration * 1000);
+                }, Math.random() * 2000);
+            }
+        }
+        
+        // Detectar interacción del usuario para poder reproducir audio
+        document.addEventListener('click', function() {
+            // Esto ayuda a desbloquear la reproducción de audio en algunos navegadores
+            if (audio.context === 'suspended') {
+                audio.resume();
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>
